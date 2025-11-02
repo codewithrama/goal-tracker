@@ -1,23 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
-
+import "./App.css";
+import Button from "./Button";
+import AddGoalForm from "./AddGoalForm";
+import Greeting from "./Greeting";
+import GoalList from "./GoalList";
+import { useState } from "react";
 function App() {
+  const [isAddForm, setIsAddForm] = useState(false);
+  const [goalArray, setGoalArray] = useState([]);
+
+  function handleAddNewGoal() {
+    setIsAddForm((curState) => !curState);
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Greeting />
+      <Button onclick={handleAddNewGoal}>
+        {isAddForm ? "close" : " ✨Add New Goal"}
+      </Button>
+      {isAddForm && (
+        <AddGoalForm setGoalArray={setGoalArray} setIsAddForm={setIsAddForm} />
+      )}
+      {goalArray.length !== 0 && (
+        <GoalList goalArray={goalArray} setGoalArray={setGoalArray} />
+      )}
     </div>
   );
 }
